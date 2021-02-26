@@ -17,7 +17,7 @@ import { listProductDetails } from "../actions/productActions";
 
 // Can get url from props.match, destructuring props so we can take match out form it
 const ProductScreen = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
