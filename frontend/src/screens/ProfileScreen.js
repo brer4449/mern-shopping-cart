@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = ({ location, history }) => {
   // set component level state
@@ -30,7 +31,8 @@ const ProfileScreen = ({ location, history }) => {
       history.push("/login");
     } else {
       // check for user (which is coming from userDetail)
-      if (!user.name) {
+      if (!user.name || !user || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         // this function takes in an id, but here we can pass in profile so in the action it hits /api/users/profile (not an actual user id)
         dispatch(getUserDetails("profile"));
       } else {
@@ -38,7 +40,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
